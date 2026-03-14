@@ -1,0 +1,18 @@
+[submodule "ecoride-config-server"]
+	path = ecoride-config-server
+	url = https://github.com/nehara-peiris/ecoride-config-server.git
+[submodule "ecoride-service-registry"]
+	path = ecoride-service-registry
+	url = https://github.com/nehara-peiris/ecoride-service-registry.git
+[submodule "ecoride-api-gateway"]
+	path = ecoride-api-gateway
+	url = https://github.com/nehara-peiris/ecoride-api-gateway.git
+[submodule "ecoride-user-service"]
+	path = ecoride-user-service
+	url = https://github.com/nehara-peiris/ecoride-user-service.git
+[submodule "ecoride-vehicle-service"]
+	path = ecoride-vehicle-service
+	url = https://github.com/nehara-peiris/ecoride-vehicle-service.git
+[submodule "ecoride-maintenance-service"]
+	path = ecoride-maintenance-service
+	url = https://github.com/nehara-peiris/ecoride-maintenance-service.git
