@@ -15,8 +15,12 @@
     </properties>
 
     <modules>
-        <module>config-server</module>
-        <module>discovery-server</module>
+        <module>ecoride-config-server</module>
+        <module>ecoride-service-registry</module>
+        <module>ecoride-api-gateway</module>
+        <module>ecoride-user-service</module>
+        <module>ecoride-vehicle-service</module>
+        <module>ecoride-maintenance-service</module>
     </modules>
 
 </project>
