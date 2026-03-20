@@ -26,7 +26,6 @@ export default function DashboardPage() {
         setJobs(jobsRes.data);
       } catch (error) {
         console.error("Failed to load dashboard data", error);
-        alert("Failed to load dashboard data");
       } finally {
         setLoading(false);
       }
@@ -35,204 +34,164 @@ export default function DashboardPage() {
     loadDashboardData();
   }, []);
 
-  const vehicleStats = useMemo(() => {
-    return {
+  const vehicleStats = useMemo(
+    () => ({
       available: vehicles.filter((v) => v.status === "AVAILABLE").length,
       inUse: vehicles.filter((v) => v.status === "IN_USE").length,
       maintenance: vehicles.filter((v) => v.status === "MAINTENANCE").length,
       offline: vehicles.filter((v) => v.status === "OFFLINE").length,
-    };
-  }, [vehicles]);
+    }),
+    [vehicles]
+  );
 
-  const maintenanceStats = useMemo(() => {
-    return {
+  const maintenanceStats = useMemo(
+    () => ({
       pending: jobs.filter((j) => j.status === "PENDING").length,
       scheduled: jobs.filter((j) => j.status === "SCHEDULED").length,
       inProgress: jobs.filter((j) => j.status === "IN_PROGRESS").length,
       completed: jobs.filter((j) => j.status === "COMPLETED").length,
       cancelled: jobs.filter((j) => j.status === "CANCELLED").length,
-    };
-  }, [jobs]);
-
-  const recentVehicles = vehicles.slice(0, 5);
-  const recentJobs = jobs.slice(0, 5);
+    }),
+    [jobs]
+  );
 
   if (loading) {
     return (
-      <div style={{ padding: "24px" }}>
-        <h1>EcoRide Dashboard</h1>
-        <p>Loading dashboard...</p>
+      <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+        <p className="text-slate-600">Loading dashboard...</p>
       </div>
     );
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
-      <h1 style={{ marginBottom: "24px" }}>EcoRide Dashboard</h1>
+    <div className="space-y-8">
+      <section className="rounded-3xl bg-gradient-to-r from-emerald-600 to-teal-500 p-8 text-white shadow-lg">
+        <p className="text-sm font-medium uppercase tracking-wider text-emerald-50">
+          Overview
+        </p>
+        <h2 className="mt-2 text-3xl font-bold">EcoRide Dashboard</h2>
+        <p className="mt-2 max-w-2xl text-sm text-emerald-50/90">
+          Monitor your users, vehicles, and maintenance activity in one place.
+        </p>
+      </section>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "16px",
-          marginBottom: "28px",
-        }}
-      >
+      <section className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard title="Total Users" value={users.length} />
         <StatCard title="Total Vehicles" value={vehicles.length} />
         <StatCard title="Maintenance Jobs" value={jobs.length} />
         <StatCard
-          title="Active Vehicle Issues"
+          title="Open Issues"
           value={
             maintenanceStats.pending +
             maintenanceStats.scheduled +
             maintenanceStats.inProgress
           }
         />
-      </div>
+      </section>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "20px",
-          marginBottom: "28px",
-        }}
-      >
-        <Panel title="Vehicle Status Overview">
-          <InfoRow label="AVAILABLE" value={vehicleStats.available} />
-          <InfoRow label="IN_USE" value={vehicleStats.inUse} />
-          <InfoRow label="MAINTENANCE" value={vehicleStats.maintenance} />
-          <InfoRow label="OFFLINE" value={vehicleStats.offline} />
+      <section className="grid gap-6 lg:grid-cols-2">
+        <Panel title="Vehicle Status">
+          <InfoRow label="Available" value={vehicleStats.available} />
+          <InfoRow label="In Use" value={vehicleStats.inUse} />
+          <InfoRow label="Maintenance" value={vehicleStats.maintenance} />
+          <InfoRow label="Offline" value={vehicleStats.offline} />
         </Panel>
 
-        <Panel title="Maintenance Status Overview">
-          <InfoRow label="PENDING" value={maintenanceStats.pending} />
-          <InfoRow label="SCHEDULED" value={maintenanceStats.scheduled} />
-          <InfoRow label="IN_PROGRESS" value={maintenanceStats.inProgress} />
-          <InfoRow label="COMPLETED" value={maintenanceStats.completed} />
-          <InfoRow label="CANCELLED" value={maintenanceStats.cancelled} />
+        <Panel title="Maintenance Status">
+          <InfoRow label="Pending" value={maintenanceStats.pending} />
+          <InfoRow label="Scheduled" value={maintenanceStats.scheduled} />
+          <InfoRow label="In Progress" value={maintenanceStats.inProgress} />
+          <InfoRow label="Completed" value={maintenanceStats.completed} />
+          <InfoRow label="Cancelled" value={maintenanceStats.cancelled} />
         </Panel>
-      </div>
+      </section>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))",
-          gap: "20px",
-        }}
-      >
+      <section className="grid gap-6 lg:grid-cols-2">
         <Panel title="Recent Vehicles">
-          {recentVehicles.length === 0 ? (
-            <p>No vehicles found.</p>
-          ) : (
-            recentVehicles.map((vehicle) => (
+          <div className="space-y-4">
+            {vehicles.slice(0, 5).map((vehicle) => (
               <div
                 key={vehicle.id}
-                style={{
-                  padding: "12px 0",
-                  borderBottom: "1px solid #e5e7eb",
-                }}
+                className="rounded-2xl border border-slate-200 p-4"
               >
-                <p style={{ fontWeight: 700 }}>{vehicle.vehicleCode}</p>
-                <p>Model: {vehicle.model}</p>
-                <p>Type: {vehicle.type}</p>
-                <p>Status: {vehicle.status}</p>
-                <p>Battery: {vehicle.batteryLevel}%</p>
+                <div className="flex items-center justify-between">
+                  <h4 className="font-semibold text-slate-900">
+                    {vehicle.vehicleCode}
+                  </h4>
+                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+                    {vehicle.status}
+                  </span>
+                </div>
+                <div className="mt-3 grid grid-cols-2 gap-2 text-sm text-slate-600">
+                  <p>Model: {vehicle.model}</p>
+                  <p>Type: {vehicle.type}</p>
+                  <p>Battery: {vehicle.batteryLevel}%</p>
+                  <p>Speed: {vehicle.speed}</p>
+                </div>
               </div>
-            ))
-          )}
+            ))}
+          </div>
         </Panel>
 
         <Panel title="Recent Maintenance Jobs">
-          {recentJobs.length === 0 ? (
-            <p>No maintenance jobs found.</p>
-          ) : (
-            recentJobs.map((job) => (
+          <div className="space-y-4">
+            {jobs.slice(0, 5).map((job) => (
               <div
                 key={job.id}
-                style={{
-                  padding: "12px 0",
-                  borderBottom: "1px solid #e5e7eb",
-                }}
+                className="rounded-2xl border border-slate-200 p-4"
               >
-                <p style={{ fontWeight: 700 }}>{job.vehicleCode}</p>
-                <p>Issue: {job.issueType}</p>
-                <p>Priority: {job.priority}</p>
-                <p>Status: {job.status}</p>
-                <p>Scheduled: {job.scheduledDate || "-"}</p>
+                <div className="flex items-center justify-between">
+                  <h4 className="font-semibold text-slate-900">
+                    {job.vehicleCode}
+                  </h4>
+                  <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-700">
+                    {job.priority}
+                  </span>
+                </div>
+                <p className="mt-2 text-sm text-slate-700">{job.issueType}</p>
+                <p className="mt-1 text-sm text-slate-500">{job.description}</p>
+                <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+                  <span>{job.status}</span>
+                  <span>{job.scheduledDate || "-"}</span>
+                </div>
               </div>
-            ))
-          )}
+            ))}
+          </div>
         </Panel>
-      </div>
+      </section>
     </div>
   );
 }
 
-type StatCardProps = {
-  title: string;
-  value: number;
-};
-
-function StatCard({ title, value }: StatCardProps) {
+function StatCard({ title, value }: { title: string; value: number }) {
   return (
-    <div
-      style={{
-        background: "#ffffff",
-        borderRadius: "14px",
-        padding: "20px",
-        boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
-        border: "1px solid #e5e7eb",
-      }}
-    >
-      <p style={{ fontSize: "14px", color: "#6b7280", marginBottom: "10px" }}>
-        {title}
-      </p>
-      <h2 style={{ fontSize: "30px", margin: 0, color: "#111827" }}>{value}</h2>
+    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <p className="text-sm font-medium text-slate-500">{title}</p>
+      <h3 className="mt-3 text-3xl font-bold text-slate-900">{value}</h3>
     </div>
   );
 }
 
-type PanelProps = {
+function Panel({
+  title,
+  children,
+}: {
   title: string;
   children: React.ReactNode;
-};
-
-function Panel({ title, children }: PanelProps) {
+}) {
   return (
-    <div
-      style={{
-        background: "#ffffff",
-        borderRadius: "14px",
-        padding: "20px",
-        boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
-        border: "1px solid #e5e7eb",
-      }}
-    >
-      <h3 style={{ marginTop: 0, marginBottom: "16px" }}>{title}</h3>
+    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <h3 className="mb-4 text-lg font-semibold text-slate-900">{title}</h3>
       {children}
     </div>
   );
 }
 
-type InfoRowProps = {
-  label: string;
-  value: number;
-};
-
-function InfoRow({ label, value }: InfoRowProps) {
+function InfoRow({ label, value }: { label: string; value: number }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "10px 0",
-        borderBottom: "1px solid #e5e7eb",
-      }}
-    >
-      <span>{label}</span>
-      <strong>{value}</strong>
+    <div className="flex items-center justify-between border-b border-slate-100 py-3 last:border-b-0">
+      <span className="text-slate-600">{label}</span>
+      <span className="font-semibold text-slate-900">{value}</span>
     </div>
   );
 }

@@ -67,8 +67,13 @@ export default function MaintenancePage() {
   };
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1000px", margin: "0 auto" }}>
-      <h1 style={{ marginBottom: "20px" }}>EcoRide - Maintenance</h1>
+    <div className="space-y-6">
+      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 className="text-2xl font-bold text-slate-900">Maintenance</h2>
+        <p className="mt-1 text-sm text-slate-500">
+          Track maintenance jobs, priorities, schedules, and completion status.
+        </p>
+      </div>
 
       <MaintenanceForm
         selectedJob={selectedJob}
@@ -77,7 +82,9 @@ export default function MaintenancePage() {
       />
 
       {loading ? (
-        <p>Loading maintenance jobs...</p>
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <p className="text-slate-600">Loading maintenance jobs...</p>
+        </div>
       ) : (
         <MaintenanceList
           jobs={jobs}

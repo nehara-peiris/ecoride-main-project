@@ -63,24 +63,24 @@ export default function MaintenanceForm({
   return (
     <form
       onSubmit={handleSubmit}
-      style={{
-        marginBottom: "24px",
-        padding: "20px",
-        border: "1px solid #ddd",
-        borderRadius: "12px",
-        background: "#fff",
-      }}
+      className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
     >
-      <h2 style={{ marginBottom: "16px" }}>
-        {form.id ? "Edit Maintenance Job" : "Add Maintenance Job"}
-      </h2>
+      <div className="mb-6">
+        <h3 className="text-xl font-semibold text-slate-900">
+          {form.id ? "Edit Maintenance Job" : "Add Maintenance Job"}
+        </h3>
+        <p className="mt-1 text-sm text-slate-500">
+          Log issues, set priority, and manage maintenance progress.
+        </p>
+      </div>
 
-      <div style={{ display: "grid", gap: "12px" }}>
+      <div className="grid gap-4 md:grid-cols-2">
         <input
           name="vehicleCode"
           placeholder="Vehicle Code"
           value={form.vehicleCode}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
 
         <input
@@ -88,6 +88,7 @@ export default function MaintenanceForm({
           placeholder="Issue Type"
           value={form.issueType}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
 
         <textarea
@@ -96,9 +97,15 @@ export default function MaintenanceForm({
           value={form.description}
           onChange={handleChange}
           rows={4}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400 md:col-span-2"
         />
 
-        <select name="priority" value={form.priority} onChange={handleChange}>
+        <select
+          name="priority"
+          value={form.priority}
+          onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
+        >
           <option value="">Select Priority</option>
           <option value="LOW">LOW</option>
           <option value="MEDIUM">MEDIUM</option>
@@ -106,7 +113,12 @@ export default function MaintenanceForm({
           <option value="CRITICAL">CRITICAL</option>
         </select>
 
-        <select name="status" value={form.status} onChange={handleChange}>
+        <select
+          name="status"
+          value={form.status}
+          onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
+        >
           <option value="">Select Status</option>
           <option value="PENDING">PENDING</option>
           <option value="SCHEDULED">SCHEDULED</option>
@@ -120,6 +132,7 @@ export default function MaintenanceForm({
           type="date"
           value={form.scheduledDate || ""}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
 
         <input
@@ -127,11 +140,15 @@ export default function MaintenanceForm({
           type="date"
           value={form.completedDate || ""}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
       </div>
 
-      <div style={{ marginTop: "16px", display: "flex", gap: "10px" }}>
-        <button type="submit">
+      <div className="mt-6 flex gap-3">
+        <button
+          type="submit"
+          className="rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-600"
+        >
           {form.id ? "Update Job" : "Add Job"}
         </button>
 
@@ -142,6 +159,7 @@ export default function MaintenanceForm({
               setForm(initialForm);
               onCancelEdit();
             }}
+            className="rounded-2xl bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-200"
           >
             Cancel
           </button>

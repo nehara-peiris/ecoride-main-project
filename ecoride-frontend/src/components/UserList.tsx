@@ -8,32 +8,49 @@ type UserListProps = {
 
 export default function UserList({ users, onEdit, onDelete }: UserListProps) {
   return (
-    <div>
-      <h2 style={{ marginBottom: "16px" }}>User List</h2>
+    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="mb-6 flex items-center justify-between">
+        <h3 className="text-xl font-semibold text-slate-900">User List</h3>
+        <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-600">
+          {users.length} users
+        </span>
+      </div>
 
       {users.length === 0 ? (
-        <p>No users found.</p>
+        <p className="text-slate-500">No users found.</p>
       ) : (
-        <div style={{ display: "grid", gap: "12px" }}>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {users.map((user) => (
             <div
               key={user.id}
-              style={{
-                border: "1px solid #ccc",
-                padding: "16px",
-                borderRadius: "10px",
-                background: "#fff",
-              }}
+              className="rounded-2xl border border-slate-200 p-5 transition hover:shadow-md"
             >
-              <p><strong>{user.fullName}</strong></p>
-              <p>{user.email}</p>
-              <p>{user.phone}</p>
-              <p>{user.licenseNumber}</p>
-              <p>Balance: {user.accountBalance}</p>
+              <div className="mb-4">
+                <h4 className="text-lg font-semibold text-slate-900">
+                  {user.fullName}
+                </h4>
+                <p className="text-sm text-slate-500">{user.email}</p>
+              </div>
 
-              <div style={{ marginTop: "12px", display: "flex", gap: "10px" }}>
-                <button onClick={() => onEdit(user)}>Edit</button>
-                <button onClick={() => onDelete(user.id)}>Delete</button>
+              <div className="space-y-2 text-sm text-slate-600">
+                <p>Phone: {user.phone}</p>
+                <p>License: {user.licenseNumber}</p>
+                <p>Balance: Rs. {user.accountBalance}</p>
+              </div>
+
+              <div className="mt-5 flex gap-2">
+                <button
+                  onClick={() => onEdit(user)}
+                  className="rounded-xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => onDelete(user.id)}
+                  className="rounded-xl bg-rose-100 px-4 py-2 text-sm font-medium text-rose-700 hover:bg-rose-200"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}

@@ -70,24 +70,24 @@ export default function VehicleForm({
   return (
     <form
       onSubmit={handleSubmit}
-      style={{
-        marginBottom: "24px",
-        padding: "20px",
-        border: "1px solid #ddd",
-        borderRadius: "12px",
-        background: "#fff",
-      }}
+      className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
     >
-      <h2 style={{ marginBottom: "16px" }}>
-        {form.id ? "Edit Vehicle" : "Add Vehicle"}
-      </h2>
+      <div className="mb-6">
+        <h3 className="text-xl font-semibold text-slate-900">
+          {form.id ? "Edit Vehicle" : "Add Vehicle"}
+        </h3>
+        <p className="mt-1 text-sm text-slate-500">
+          Enter vehicle details and operational status.
+        </p>
+      </div>
 
-      <div style={{ display: "grid", gap: "12px" }}>
+      <div className="grid gap-4 md:grid-cols-2">
         <input
           name="vehicleCode"
           placeholder="Vehicle Code"
           value={form.vehicleCode}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
 
         <input
@@ -95,6 +95,7 @@ export default function VehicleForm({
           placeholder="Model"
           value={form.model}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
 
         <input
@@ -102,9 +103,15 @@ export default function VehicleForm({
           placeholder="Type"
           value={form.type}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
 
-        <select name="status" value={form.status} onChange={handleChange}>
+        <select
+          name="status"
+          value={form.status}
+          onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
+        >
           <option value="">Select Status</option>
           <option value="AVAILABLE">AVAILABLE</option>
           <option value="IN_USE">IN_USE</option>
@@ -118,24 +125,7 @@ export default function VehicleForm({
           placeholder="Battery Level"
           value={form.batteryLevel}
           onChange={handleChange}
-        />
-
-        <input
-          name="latitude"
-          type="number"
-          step="any"
-          placeholder="Latitude"
-          value={form.latitude}
-          onChange={handleChange}
-        />
-
-        <input
-          name="longitude"
-          type="number"
-          step="any"
-          placeholder="Longitude"
-          value={form.longitude}
-          onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
 
         <input
@@ -145,11 +135,35 @@ export default function VehicleForm({
           placeholder="Speed"
           value={form.speed}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
+        />
+
+        <input
+          name="latitude"
+          type="number"
+          step="any"
+          placeholder="Latitude"
+          value={form.latitude}
+          onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
+        />
+
+        <input
+          name="longitude"
+          type="number"
+          step="any"
+          placeholder="Longitude"
+          value={form.longitude}
+          onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
       </div>
 
-      <div style={{ marginTop: "16px", display: "flex", gap: "10px" }}>
-        <button type="submit">
+      <div className="mt-6 flex gap-3">
+        <button
+          type="submit"
+          className="rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-600"
+        >
           {form.id ? "Update Vehicle" : "Add Vehicle"}
         </button>
 
@@ -160,6 +174,7 @@ export default function VehicleForm({
               setForm(initialForm);
               onCancelEdit();
             }}
+            className="rounded-2xl bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-200"
           >
             Cancel
           </button>

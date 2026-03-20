@@ -24,7 +24,6 @@ export default function UsersPage() {
       setUsers(res.data);
     } catch (error) {
       console.error("Failed to load users", error);
-      alert("Failed to load users");
     } finally {
       setLoading(false);
     }
@@ -34,50 +33,38 @@ export default function UsersPage() {
     loadUsers();
   }, []);
 
-  const handleEdit = (user: User) => {
-    setSelectedUser(user);
-  };
-
-  const handleDelete = async (id?: number) => {
-    if (!id) return;
-
-    try {
-      await api.delete(`/api/v1/users/${id}`);
-      alert("User deleted successfully");
-      loadUsers();
-
-      if (selectedUser.id === id) {
-        setSelectedUser(emptyUser);
-      }
-    } catch (error) {
-      console.error("Failed to delete user", error);
-      alert("Failed to delete user");
-    }
-  };
-
-  const handleSaved = () => {
-    setSelectedUser(emptyUser);
-    loadUsers();
-  };
-
-  const handleCancelEdit = () => {
-    setSelectedUser(emptyUser);
-  };
-
   return (
-    <div style={{ padding: "24px", maxWidth: "1000px", margin: "0 auto" }}>
-      <h1 style={{ marginBottom: "20px" }}>EcoRide - Users</h1>
+    <div className="space-y-6">
+      <div className="rounded-3xl bg-white p-6 shadow-sm border border-slate-200">
+        <h2 className="text-2xl font-bold text-slate-900">Users</h2>
+        <p className="mt-1 text-sm text-slate-500">
+          Manage rider profiles and account details.
+        </p>
+      </div>
 
       <UserForm
         selectedUser={selectedUser}
-        onSaved={handleSaved}
-        onCancelEdit={handleCancelEdit}
+        onSaved={() => {
+          setSelectedUser(emptyUser);
+          loadUsers();
+        }}
+        onCancelEdit={() => setSelectedUser(emptyUser)}
       />
 
       {loading ? (
-        <p>Loading users...</p>
+        <div className="rounded-3xl bg-white p-6 shadow-sm border border-slate-200">
+          <p className="text-slate-600">Loading users...</p>
+        </div>
       ) : (
-        <UserList users={users} onEdit={handleEdit} onDelete={handleDelete} />
+        <UserList
+          users={users}
+          onEdit={setSelectedUser}
+          onDelete={async (id) => {
+            if (!id) return;
+            await api.delete(`/api/v1/users/${id}`);
+            loadUsers();
+          }}
+        />
       )}
     </div>
   );

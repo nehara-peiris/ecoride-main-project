@@ -29,7 +29,6 @@ export default function UserForm({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
     setForm((prev) => ({
       ...prev,
       [name]: name === "accountBalance" ? Number(value) : value,
@@ -42,83 +41,88 @@ export default function UserForm({
     try {
       if (form.id) {
         await api.put(`/api/v1/users/${form.id}`, form);
-        alert("User updated successfully");
       } else {
         await api.post("/api/v1/users", form);
-        alert("User created successfully");
       }
 
       setForm(initialForm);
       onSaved();
     } catch (error: any) {
       console.error(error);
-      alert(error?.response?.data?.message || "Failed to create user");
+      alert(error?.response?.data?.message || "Failed to save user");
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      style={{
-        marginBottom: "24px",
-        padding: "20px",
-        border: "1px solid #ddd",
-        borderRadius: "12px",
-        background: "#fff",
-      }}
+      className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
     >
-      <h2 style={{ marginBottom: "16px" }}>
-        {form.id ? "Edit User" : "Add User"}
-      </h2>
+      <div className="mb-6">
+        <h3 className="text-xl font-semibold text-slate-900">
+          {form.id ? "Edit User" : "Add User"}
+        </h3>
+        <p className="mt-1 text-sm text-slate-500">
+          Fill in the user details below.
+        </p>
+      </div>
 
-      <div style={{ display: "grid", gap: "12px" }}>
+      <div className="grid gap-4 md:grid-cols-2">
         <input
           name="fullName"
           placeholder="Full Name"
           value={form.fullName}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
-
         <input
           name="email"
           placeholder="Email"
           value={form.email}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
-
         <input
           name="phone"
           placeholder="Phone"
           value={form.phone}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
-
         <input
           name="licenseNumber"
           placeholder="License Number"
           value={form.licenseNumber}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400"
         />
-
         <input
           name="accountBalance"
           type="number"
-          placeholder="Balance"
+          placeholder="Account Balance"
           value={form.accountBalance}
           onChange={handleChange}
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none transition focus:border-emerald-400 md:col-span-2"
         />
       </div>
 
-      <div style={{ marginTop: "16px", display: "flex", gap: "10px" }}>
-        <button type="submit">
+      <div className="mt-6 flex gap-3">
+        <button
+          type="submit"
+          className="rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-600"
+        >
           {form.id ? "Update User" : "Add User"}
         </button>
 
         {form.id && (
-          <button type="button" onClick={() => {
-            setForm(initialForm);
-            onCancelEdit();
-          }}>
+          <button
+            type="button"
+            onClick={() => {
+              setForm(initialForm);
+              onCancelEdit();
+            }}
+            className="rounded-2xl bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-200"
+          >
             Cancel
           </button>
         )}

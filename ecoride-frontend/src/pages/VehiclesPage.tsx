@@ -69,8 +69,13 @@ export default function VehiclesPage() {
   };
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1000px", margin: "0 auto" }}>
-      <h1 style={{ marginBottom: "20px" }}>EcoRide - Vehicles</h1>
+    <div className="space-y-6">
+      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 className="text-2xl font-bold text-slate-900">Vehicles</h2>
+        <p className="mt-1 text-sm text-slate-500">
+          Manage your fleet, vehicle status, location, and battery details.
+        </p>
+      </div>
 
       <VehicleForm
         selectedVehicle={selectedVehicle}
@@ -79,7 +84,9 @@ export default function VehiclesPage() {
       />
 
       {loading ? (
-        <p>Loading vehicles...</p>
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <p className="text-slate-600">Loading vehicles...</p>
+        </div>
       ) : (
         <VehicleList
           vehicles={vehicles}

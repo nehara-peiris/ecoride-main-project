@@ -7,23 +7,18 @@ import MaintenancePage from "./pages/MaintenancePage";
 
 export default function App() {
   return (
-    <div style={{ background: "#f4f7fb", minHeight: "100vh" }}>
+    <div className="min-h-screen bg-slate-50">
       <Navbar />
 
-      <div style={{ padding: "20px" }}>
+      <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <Routes>
-          {/* default route */}
           <Route path="/" element={<Navigate to="/dashboard" />} />
-
-          {/* dashboard */}
           <Route path="/dashboard" element={<DashboardPage />} />
-
-          {/* modules */}
           <Route path="/users" element={<UsersPage />} />
           <Route path="/vehicles" element={<VehiclesPage />} />
           <Route path="/maintenance" element={<MaintenancePage />} />
         </Routes>
-      </div>
+      </main>
     </div>
   );
 }
