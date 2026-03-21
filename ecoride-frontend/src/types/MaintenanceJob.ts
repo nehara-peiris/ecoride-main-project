@@ -7,4 +7,6 @@ export interface MaintenanceJob {
   status: string;
   scheduledDate: string;
   completedDate: string;
+  attachmentUrl?: string;
+  attachmentName?: string;
 }

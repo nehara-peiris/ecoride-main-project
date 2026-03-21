@@ -48,7 +48,18 @@ export default function MaintenanceList({
                 <p>Status: {job.status}</p>
                 <p>Scheduled: {job.scheduledDate || "-"}</p>
                 <p>Completed: {job.completedDate || "-"}</p>
-                <p className="text-sm text-slate-600">Description: {job.description}</p>
+                <p>Description: {job.description}</p>
+
+                {job.attachmentUrl && (
+                  <a
+                    href={job.attachmentUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-block text-sm text-blue-600 underline"
+                  >
+                    View Attachment
+                  </a>
+                )}
               </div>
 
               <div className="mt-5 flex gap-2">
