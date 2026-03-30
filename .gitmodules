@@ -16,3 +16,6 @@
 [submodule "ecoride-maintenance-service"]
 	path = ecoride-maintenance-service
 	url = https://github.com/nehara-peiris/ecoride-maintenance-service.git
+[submodule "ecoride-backend-platform"]
+	path = ecoride-backend-platform
+	url = https://github.com/nehara-peiris/ecoride-backend-platform.git
